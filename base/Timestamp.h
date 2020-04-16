@@ -20,11 +20,11 @@ inline Timestamp now() {
 }
 
 inline Timestamp nowAfter(Nanosecond interval) {
-    return (now() + interval);
+    return now() + interval;
 }
 
 inline Timestamp nowBefore(Nanosecond interval) {
-    return (now() - interval);
+    return now() - interval;
 }
 
 #endif

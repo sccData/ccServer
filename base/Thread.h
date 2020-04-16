@@ -17,11 +17,12 @@ public:
     void start();
     int join();
 
-    bool started() const { return started_; }
-    pid_t tid() const { return tid_; }
+    bool started()            const { return started_; }
+    pid_t tid()               const { return tid_; }
     const std::string& name() const { return name_; }
 
-    static int numCreated() { return numCreated_.get(); }
+    static int numCreated()         { return numCreated_.get(); }
+
 private:
     void setDefaultName();
 

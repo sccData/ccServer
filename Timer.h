@@ -2,8 +2,9 @@
 #define TIMER_H
 
 #include <assert.h>
-// #include "Callbacks.h"
-// #include "Channel.h"
+#include "Callbacks.h"
+#include <functional>
+#include "Channel.h"
 #include "base/Timestamp.h"
 #include "base/noncopyable.h"
 
