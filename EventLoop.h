@@ -4,16 +4,18 @@
 #include "base/Logging.h"
 #include "base/CurrentThread.h"
 #include "base/Mutex.h"
+#include "Callbacks.h"
+#include "Timer.h"
+#include "TimerQueue.h"
+#include "Epoll.h"
 
 #include <assert.h>
-#include <functional>
+#include <sys/types.h>
 #include <vector>
 #include <atomic>
 
 class EventLoop : noncopyable {
 public:
-    typedef std::function<void()> Task;
-
     EventLoop();
     ~EventLoop();
 
@@ -24,6 +26,11 @@ public:
     void runInLoop(Task&& task);
     void queueInLoop(const Task& task);
     void queueInLoop(Task&& task);
+
+    Timer* runAt(Timestamp when, TimerCallback callback);
+    Timer* runAfter(Nanosecond interval, TimerCallback callback);
+    Timer* runEvery(Nanosecond interval, TimerCallback callback);
+    void cancelTimer(Timer* timer);
 
     void wakeup();
 
@@ -54,8 +61,8 @@ private:
     const int wakeupFd_;
     Channel wakeupChannel_;
     mutable MutexLock mutex_;
-    std::vector<Task> pendingTasks;
-
+    std::vector<Task> pendingTasks_;
+    TimerQueue timerQueue_;
 }
 
 #endif
