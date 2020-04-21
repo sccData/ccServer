@@ -47,6 +47,8 @@ public:
         return threadId_ == CurrentThread::tid();
     }
 
+    static EventLoop* getEventLoopOfCurrentThread()
+
 private:
     void abortNotInLoopThread();
 
@@ -63,6 +65,6 @@ private:
     mutable MutexLock mutex_;
     std::vector<Task> pendingTasks_;
     TimerQueue timerQueue_;
-}
+};
 
 #endif

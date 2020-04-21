@@ -1,6 +1,7 @@
-#include <assert.h>
-
+#include "EventLoop.h"
 #include "Channel.h"
+
+#include <assert.h>
 
 Channel::Channel(EventLoop* loop, int fd) : polling(false), loop_(loop),
                                             fd_(fd), events_(0), revents_(0),

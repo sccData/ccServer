@@ -1,7 +1,7 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
-
 #include "base/noncopyable.h"
+
 #include <functional>
 #include <sys/epoll.h>
 #include <memory>
