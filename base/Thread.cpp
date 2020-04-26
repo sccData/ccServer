@@ -56,7 +56,7 @@ void* startThread(void* obj) {
     return NULL;
 }
 
-AtomicInt32 Thread::numCreated_;
+std::atomic_int Thread::numCreated_;
 Thread::Thread(ThreadFunc func, const std::string& n) : started_(false),
 joined_(false), pthreadId_(0), tid_(0), func_(std::move(func)), name_(n), latch_(1) {
     
@@ -70,7 +70,7 @@ Thread::~Thread() {
 }
 
 void Thread::setDefaultName() {
-    int num = numCreated_.incrementAndGet();
+    int num = atomic_fetch_add(&numCreated_, 1);
     if(name_.empty()) {
         char buf[32];
         snprintf(buf, sizeof buf, "Thread%d", num);

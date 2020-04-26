@@ -1,11 +1,11 @@
 #ifndef BASE_THREAD_H
 #define BASE_THREAD_H
-#include "Atomic.h"
 #include "CountDownLatch.h"
 #include <functional>
 #include <memory>
 #include <pthread.h>
 #include <string>
+#include <atomic>
 
 class Thread : noncopyable {
 public:
@@ -21,7 +21,7 @@ public:
     pid_t tid()               const { return tid_; }
     const std::string& name() const { return name_; }
 
-    static int numCreated()         { return numCreated_.get(); }
+    static int numCreated()         { return numCreated_.load(); }
 
 private:
     void setDefaultName();
@@ -34,7 +34,7 @@ private:
     std::string name_;
     CountDownLatch latch_;
 
-    static AtomicInt32 numCreated_;
+    static std::atomic_int numCreated_;
 };
 
 #endif
